@@ -1,4 +1,4 @@
-package de.mme.hibswing.gui;
+package de.mme.hibswing.views;
 
 import java.awt.EventQueue;
 
