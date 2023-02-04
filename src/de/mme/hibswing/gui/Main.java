@@ -26,12 +26,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
+import java.awt.Component;
+import javax.swing.SwingConstants;
+import javax.swing.JTextArea;
 
 public class Main {
 
 	private JFrame frame;
 	private MainWindowController _controller = new MainWindowController();
-	private JTable table;
 
 	
 	/**
@@ -62,7 +64,7 @@ public class Main {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 638, 858);
+		frame.setBounds(100, 100, 638, 407);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -70,18 +72,28 @@ public class Main {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
-		table = new JTable();
-		panel.add(table);
+		JTextArea textArea = new JTextArea();
+		panel.add(textArea);
 		
 		JPanel panel_1 = new JPanel();
 		frame.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
-		JButton btnNewButton = new JButton("New button");
-		panel_1.add(btnNewButton);
+		JButton btnPersonCreate = new JButton("Create Person");
+		btnPersonCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(btnPersonCreate);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_1.add(btnNewButton_1);
+		JButton btnPersonDelete = new JButton("Delete Person");
+		btnPersonDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(btnPersonDelete);
+		
+		JButton btnPersonUpdate = new JButton("Update Person");
+		btnPersonUpdate.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(btnPersonUpdate);
+		
+		JButton btnPersonRequest = new JButton("Request Person");
+		btnPersonRequest.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(btnPersonRequest);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
