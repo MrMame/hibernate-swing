@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import de.mme.hibswing.dataAccess.entities.Person;
 
-public class latestPersons {
+public class LatestPersons {
 
 	
 	private List<Person> _persons = new ArrayList<>();
