@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import de.mme.hibswing.controllers.MainWindowController;
 import de.mme.hibswing.dataAccess.entities.Person;
 import de.mme.hibswing.dataAccess.services.PersonService;
+import de.mme.hibswing.model.requests.PersonsRequest;
 
 import java.awt.GridLayout;
 
@@ -34,28 +35,27 @@ public class MainView implements IView{
 
 	private JFrame _frame;
 
-
+	JTextArea _textArea; 
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainView window = new MainView();
-					window._frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private MainWindowController _mainWindowController;
+	private PersonsRequest _personsModel;
+	
+	
+
 
 	/**
 	 * Create the application.
 	 */
-	public MainView() {
+	public MainView(MainWindowController mainWindowController, PersonsRequest personsModel) {
+		
+		_personsModel = personsModel;
+		_mainWindowController = mainWindowController;
+		_mainWindowController.addPersonsChangedListener(()->{
+			onPersonsChangedEvent();
+		});
+	
+		
+		
 		initialize();
 	}
 
@@ -63,6 +63,7 @@ public class MainView implements IView{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		_frame = new JFrame();
 		_frame.setBounds(100, 100, 638, 407);
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,8 +73,8 @@ public class MainView implements IView{
 		_frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
-		JTextArea textArea = new JTextArea();
-		panel.add(textArea);
+		_textArea = new JTextArea();
+		panel.add(_textArea);
 		
 		JPanel panel_1 = new JPanel();
 		_frame.getContentPane().add(panel_1, BorderLayout.WEST);
@@ -92,6 +93,11 @@ public class MainView implements IView{
 		panel_1.add(btnPersonUpdate);
 		
 		JButton btnPersonRequest = new JButton("Request Person");
+		btnPersonRequest.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getAllPersons();
+			}
+		});
 		btnPersonRequest.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel_1.add(btnPersonRequest);
 		
@@ -116,4 +122,17 @@ public class MainView implements IView{
 		// TODO Auto-generated method stub
 		_frame.setVisible(true);
 	}
+	
+	
+	private void onPersonsChangedEvent() {
+		_textArea.setText(null);
+		_textArea.setText(_personsModel.getPersons().toString());
+	}
+	
+	
+	private void getAllPersons() {
+		_mainWindowController.getAllPersons();
+	}
+	
+	
 }
