@@ -29,6 +29,8 @@ import javax.swing.JMenuItem;
 import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import java.awt.Component;
+import java.awt.Dialog.ModalityType;
+
 import javax.swing.SwingConstants;
 
 import antlr.collections.impl.Vector;
@@ -89,6 +91,11 @@ public class MainView implements IView{
 		
 		
 		JButton btnPersonCreate = new JButton("Create Person");
+		btnPersonCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewPerson();
+			}
+		});
 		btnPersonCreate.setMaximumSize(new Dimension(150, 40));
 		btnPersonCreate.setSize(new Dimension(60, 35));
 		btnPersonCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -206,6 +213,16 @@ public class MainView implements IView{
 		}
 		_mainWindowController.deletePersons(persons);
 	}
+	private void addNewPerson() {
+		NewPersonView npv = new NewPersonView();
+		npv.setModalityType(ModalityType.APPLICATION_MODAL);
+		npv.setVisible(true);
+		Person newPerson= npv.getPerson();
+		npv.dispose();
+		_mainWindowController.addPerson(newPerson);
+		
+	}
+	
 	
 	
 }
