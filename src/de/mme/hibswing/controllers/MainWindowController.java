@@ -49,10 +49,12 @@ public class MainWindowController {
 		_personsModel.setPersons(_personService.getAllPersons());
 		return _personsModel.getPersons();
 	}
-	public void rebuildDB() {
+	
+	public void ResetDB() {
 		_dbSchemaService.rebuildPersonDB();
 	}
 		
+	
 	
 	
 	

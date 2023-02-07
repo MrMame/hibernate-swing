@@ -30,6 +30,7 @@ import javax.swing.JTable;
 import java.awt.Component;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
+import java.awt.Dimension;
 
 public class MainView implements IView{
 
@@ -81,21 +82,29 @@ public class MainView implements IView{
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
 		
 		JButton btnPersonCreate = new JButton("Create Person");
+		btnPersonCreate.setMaximumSize(new Dimension(150, 40));
+		btnPersonCreate.setSize(new Dimension(60, 35));
 		btnPersonCreate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel_1.add(btnPersonCreate);
 		
 		JButton btnPersonDelete = new JButton("Delete Person");
+		btnPersonDelete.setMaximumSize(new Dimension(150, 40));
+		btnPersonDelete.setSize(new Dimension(60, 35));
 		btnPersonDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel_1.add(btnPersonDelete);
 		
 		JButton btnPersonUpdate = new JButton("Update Person");
+		btnPersonUpdate.setMaximumSize(new Dimension(150, 40));
+		btnPersonUpdate.setSize(new Dimension(60, 35));
 		btnPersonUpdate.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel_1.add(btnPersonUpdate);
 		
 		JButton btnPersonRequest = new JButton("Request Person");
+		btnPersonRequest.setMaximumSize(new Dimension(150, 40));
+		btnPersonRequest.setSize(new Dimension(60, 35));
 		btnPersonRequest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				getAllPersons();
+				commandGetAllPersons();
 			}
 		});
 		btnPersonRequest.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,6 +118,17 @@ public class MainView implements IView{
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("DB settings...");
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JMenu mnNewMenu_1 = new JMenu("Database");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Reset");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commandResetDB();
+			}
+		});
+		mnNewMenu_1.add(mntmNewMenuItem_1);
 	
 		// Person List
 		DefaultListModel<Person> personsList = new DefaultListModel<>();
@@ -130,7 +150,14 @@ public class MainView implements IView{
 	}
 	
 	
-	private void getAllPersons() {
+	/*
+	 * ########################################## COMMANDS ###########################################################
+	 * */
+	
+	private void commandResetDB() {
+		_mainWindowController.ResetDB();
+	}
+	private void commandGetAllPersons() {
 		_mainWindowController.getAllPersons();
 	}
 	
