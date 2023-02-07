@@ -29,19 +29,21 @@ import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import java.awt.Component;
 import javax.swing.SwingConstants;
+
+import antlr.collections.impl.Vector;
+
 import javax.swing.JTextArea;
 import java.awt.Dimension;
+import javax.swing.AbstractListModel;
 
 public class MainView implements IView{
 
 	private JFrame _frame;
-
-	JTextArea _textArea; 
 	
 	private MainWindowController _mainWindowController;
 	private PersonsRequest _personsModel;
 	
-	
+	private JList _outputList;
 
 
 	/**
@@ -72,14 +74,18 @@ public class MainView implements IView{
 		
 		JPanel panel = new JPanel();
 		_frame.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.setLayout(new BorderLayout());
 		
-		_textArea = new JTextArea();
-		panel.add(_textArea);
+	
 		
 		JPanel panel_1 = new JPanel();
 		_frame.getContentPane().add(panel_1, BorderLayout.WEST);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
+		
+		
+		
+		createOutputList(panel);
+		
 		
 		JButton btnPersonCreate = new JButton("Create Person");
 		btnPersonCreate.setMaximumSize(new Dimension(150, 40));
@@ -130,13 +136,30 @@ public class MainView implements IView{
 		});
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 	
-		// Person List
-		DefaultListModel<Person> personsList = new DefaultListModel<>();
-		
-		JList personList = new JList<Person>();	
+	
 		
 	}
 
+	
+	
+	
+	
+	private void createOutputList(JPanel panel) {
+		// Create new JList
+		_outputList = new JList();
+		// Create scrollable container that contains the OutputList
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(_outputList);
+		_outputList.setLayoutOrientation(JList.VERTICAL);
+		// Add the scrollcontainer to the panel
+		panel.add(scrollPane,BorderLayout.CENTER);
+	}
+
+	/*
+	 * ########################################## Interfaces and Overrides ###########################################################
+	 * */
+	
+	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -144,9 +167,17 @@ public class MainView implements IView{
 	}
 	
 	
+	/*
+	 * ########################################## EventHandler ###########################################################
+	 * */
+
+	
 	private void onPersonsChangedEvent() {
-		_textArea.setText(null);
-		_textArea.setText(_personsModel.getPersons().toString());
+		DefaultListModel<Person> model = new DefaultListModel<>();
+		for(Person p: _personsModel.getPersons()) {
+			model.addElement(p);
+		}
+		_outputList.setModel(model);
 	}
 	
 	
@@ -160,6 +191,7 @@ public class MainView implements IView{
 	private void commandGetAllPersons() {
 		_mainWindowController.getAllPersons();
 	}
+
 	
 	
 }
