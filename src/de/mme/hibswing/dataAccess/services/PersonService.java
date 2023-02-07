@@ -1,5 +1,6 @@
 package de.mme.hibswing.dataAccess.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -33,6 +34,25 @@ public class PersonService {
 			throw e;
 		}
 		
+	}
+	
+	
+	public void removePerson(ArrayList<Person> persons) {
+		if(persons == null) throw new IllegalArgumentException();
+		
+		Session session = _factory.getPersonsSession();
+		
+		try {
+			session.beginTransaction();
+			for(Person p:persons) {
+				session.remove(p);
+			}
+			
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			throw e;
+		}
 	}
 	
 	

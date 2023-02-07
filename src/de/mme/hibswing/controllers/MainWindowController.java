@@ -47,15 +47,23 @@ public class MainWindowController {
 	
 	public Collection<Person> getAllPersons(){
 		_personsModel.setPersons(_personService.getAllPersons());
+		refreshModel();
 		return _personsModel.getPersons();
 	}
 	
 	public void ResetDB() {
 		_dbSchemaService.rebuildPersonDB();
+		refreshModel();
 	}
 		
+	public void deletePersons(ArrayList<Person> persons) {
+		_personService.removePerson(persons);
+		refreshModel();
+	}
 	
-	
+	private void refreshModel() {
+		_personsModel.setPersons(_personService.getAllPersons());
+	}
 	
 	
 	
