@@ -45,8 +45,12 @@ public class MainWindowController {
 	
 	
 	
+	public void addPerson(Person newPerson) {
+		_personService.addPerson(newPerson);
+		refreshModel();
+	}
+	
 	public Collection<Person> getAllPersons(){
-		_personsModel.setPersons(_personService.getAllPersons());
 		refreshModel();
 		return _personsModel.getPersons();
 	}
