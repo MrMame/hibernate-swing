@@ -17,6 +17,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -97,6 +98,11 @@ public class MainView implements IView{
 		btnPersonDelete.setMaximumSize(new Dimension(150, 40));
 		btnPersonDelete.setSize(new Dimension(60, 35));
 		btnPersonDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnPersonDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				commandDeleteSelectedPersons();
+			}
+		});
 		panel_1.add(btnPersonDelete);
 		
 		JButton btnPersonUpdate = new JButton("Update Person");
@@ -191,7 +197,15 @@ public class MainView implements IView{
 	private void commandGetAllPersons() {
 		_mainWindowController.getAllPersons();
 	}
-
+	private void commandDeleteSelectedPersons() {
+		
+		ArrayList<Person> persons = new ArrayList<>();
+		int[] indc = _outputList.getSelectedIndices();
+		for(int idx:indc) {
+			persons.add((Person)_outputList.getModel().getElementAt(idx));
+		}
+		_mainWindowController.deletePersons(persons);
+	}
 	
 	
 }
